@@ -1,0 +1,10 @@
+package $packageName;
+
+import cucumber.api.cli.Main;
+
+public class CucumberMain extends Main {
+
+  public static byte runFeatures(String[] argv) throws Throwable {
+    return run(argv, Thread.currentThread().getContextClassLoader());
+  }
+}
