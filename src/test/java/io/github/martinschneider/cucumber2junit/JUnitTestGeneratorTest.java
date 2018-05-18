@@ -13,7 +13,7 @@ public class JUnitTestGeneratorTest {
   private static final String FEATURES_OUTPUT_DIRECTORY = System.getProperty("java.io.tmpdir");
   private static final String FEATURES_CLASSPATH = "features";
   private static final String FEATURES_SOURCE_DIRECTORY = "features";
-  private static final String TEMPLATE_PATH = "/Users/martinschneider/junit.vm";
+  private static final String TEMPLATE_PATH = "";
   private JUnitTestGenerator target = new JUnitTestGenerator();
 
   @Test
