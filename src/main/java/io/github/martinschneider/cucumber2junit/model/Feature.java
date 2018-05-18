@@ -1,5 +1,6 @@
 package io.github.martinschneider.cucumber2junit.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import java.util.List;
 
@@ -82,5 +83,15 @@ public class Feature {
         && Objects.equal(this.scenarios, other.scenarios)
         && Objects.equal(this.tags, other.tags)
         && Objects.equal(this.fileName, other.fileName);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .add("name", name)
+        .add("scenarios", scenarios)
+        .add("tags", tags)
+        .add("fileName", fileName)
+        .toString();
   }
 }

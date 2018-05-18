@@ -1,5 +1,6 @@
 package io.github.martinschneider.cucumber2junit.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import io.github.martinschneider.cucumber2junit.JavaUtils;
 import java.util.List;
@@ -71,6 +72,18 @@ public class Scenario {
         && Objects.equal(this.tags, other.tags);
   }
   
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .add("name", name)
+        .add("lineNumber", lineNumber)
+        .add("tags", tags)
+        .toString();
+  }
+  
+  /**
+   * @return name used for the Java method
+   */
   public String getJavaName() {
     return JavaUtils.toMethodName(name);
   }
