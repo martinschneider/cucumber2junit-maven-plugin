@@ -16,7 +16,7 @@ public class FeatureParserTest {
     List<Feature> features = target.parseFeatures(path, "ios,", "android", "web");
     assertThat(features.size()).as("Check number of features").isEqualTo(3);
     assertThat(features)
-        .containsExactly(
+        .containsExactlyInAnyOrder(
             TestDataProvider.getFeature1(),
             TestDataProvider.getFeature2(),
             TestDataProvider.getFeature3());
@@ -28,7 +28,7 @@ public class FeatureParserTest {
     List<Feature> features = target.parseFeatures(path, "ios");
     assertThat(features.size()).as("Check number of features").isEqualTo(2);
     assertThat(features)
-        .containsExactly(TestDataProvider.getFeature2IosOnly(), TestDataProvider.getFeature3());
+        .containsExactlyInAnyOrder(TestDataProvider.getFeature2IosOnly(), TestDataProvider.getFeature3());
   }
 
   @Test
