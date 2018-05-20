@@ -46,7 +46,7 @@ Add the following  configuration in the `pom.xml` of your project:
 
     <templatePath>/path/to/custom/template.vm</templatePath>
 
-This is the path to a velocity template which will be used for generating the JUnit test code. See ... for the default.
+This is the path to a velocity template which will be used for generating the JUnit test code. See [junitTestClass.vm](src/main/resources/junitTestClass.vm) for the default.
 
 Here are the other possible configuration parameter with their respective default values:
 
@@ -55,7 +55,7 @@ Here are the other possible configuration parameter with their respective defaul
     <featuresClasspath>features</featuresClasspath>
     <featuresOutputDirectory>"/tmp/features"</featuresOutputDirectory>
 
-Make sure that the featuresOutputDirectory points to a directory that you are allowed to write to in your AWS setup.
+Make sure that the `featuresOutputDirectory` points to a directory that you are allowed to write to in your AWS setup.
 
 Also, add the configuration detailed in the [AWS documentation](https://docs.aws.amazon.com/devicefarm/latest/developerguide/test-types-android-appium-java-junit.html#test-types-android-appium-java-junit-prepare) to package your project and all dependencies into a single zip-file.
 
