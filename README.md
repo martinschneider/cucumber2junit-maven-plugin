@@ -1,3 +1,4 @@
+[<img src="https://travis-ci.com/martinschneider/cucumber2junit.svg?branch=master" height="41" alt="Build status"/>](https://travis-ci.com/martinschneider/cucumber2junit)
 [<img src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-1.svg" height="41" alt="Buy me a coffee"/>](https://www.buymeacoffee.com/mschneider)
 
 # cucumber2junit-maven-plugin
@@ -64,35 +65,39 @@ Then simply run `mvn -Paws package -DskipTests=true`. This will result in a zip-
 
 ## Additional documentation
 ### Customising the Velocity template
-This plugin uses Apache Velocity to generate Jave source code. You can use the following placeholders within the template:
+This plugin uses Apache Velocity to generate Java source code. You can customise the template to the specific needs of your project. For example you might to execute custom code before every test execution.
 
-`className` the name of the test class (derived from the name of the feature)
-`packageName` the package for the JUnit tests
-`featuresSourceDirectory` the absolute path to the feature files
-`javaOutputDirectory` the absolute path to write the JUnit tests to
-`feature` the feature object (see ... for the public methods it exposes)
-`featuresOutputDirectory` the absolute path to write the feature files to
-`featuresClasspath`, the classpath to load the feature files from
-`scenarios` the scenarios (see ... for the Java code)
-`stepsPackage` the package including the glue code (steps)
+You can use the following placeholders within the template:
+
+* `className` the name of the test class (derived from the name of the feature)
+* `packageName` the package for the JUnit tests
+* `featuresSourceDirectory` the absolute path to the feature files
+* `javaOutputDirectory` the absolute path to write the JUnit tests to
+* `feature` the feature object (see ... for the public methods it exposes)
+* `featuresOutputDirectory` the absolute path to write the feature files to
+* `featuresClasspath`, the classpath to load the feature files from
+* `scenarios` the scenarios (see ... for the Java code)
+* `stepsPackage` the package including the glue code (steps)
 
 The (absolute) path to the template file can be set in the configuration of the plugin.
  
     <templatePath>/path/to/custom/template.vm</templatePath>
 
-If it is not specified the default will be used.
+If it is not specified the [default](src/main/resources/junitTestClass.vm) will be used.
 
 ### Additional placeholders
-You can define a map of additional placeholders for the velocity template like this:
+You can also define a map of additional placeholders for the velocity template:
 
-    <additionalPlaceholders>
-     <key1>value1</key1>
-     <key2>value2</key2>
-    </additionalPlaceholders>
+    <configuration>
+      ...
+      <additionalPlaceholders>
+       <key1>value1</key1>
+       <key2>value2</key2>
+      </additionalPlaceholders>
+      ...
+    </configuration>
 
-Maven resolves system properties within the values so the following example works too:
-
-Configuration:
+Maven resolves system properties within the values so the following example works as well:
 
     <additionalPlaceholders>
      <key>${someSystemProp}</key>
@@ -100,7 +105,7 @@ Configuration:
 
 You can then pass the value as a parameter when packaging your project: `mvn -Paws -DsomeSystemProp=value package -DskipTests=true`.
 
-`$key` will then be replaced with `value` in the template.
+All occurences of `$key` will then be replaced with `value` when processing the template..
 
 
 ## Contact
