@@ -13,7 +13,7 @@ public class FeatureParserTest {
   @Test
   public void testParseFeature() {
     String path = this.getClass().getClassLoader().getResource("features").getPath();
-    List<Feature> features = target.parseFeatures(path, "ios,", "android", "web");
+    List<Feature> features = target.parseFeatures(path);
     assertThat(features.size()).as("Check number of features").isEqualTo(3);
     assertThat(features)
         .containsExactlyInAnyOrder(
@@ -29,6 +29,19 @@ public class FeatureParserTest {
     assertThat(features.size()).as("Check number of features").isEqualTo(2);
     assertThat(features)
         .containsExactlyInAnyOrder(TestDataProvider.getFeature2IosOnly(), TestDataProvider.getFeature3());
+    features = target.parseFeatures(path, "stable");
+    assertThat(features.size()).as("Check number of features").isEqualTo(1);
+    assertThat(features.get(0).getScenarios().size()).as("Check number of features").isEqualTo(2);
+    features = target.parseFeatures(path, "stable", "ios");
+    assertThat(features.size()).as("Check number of features").isEqualTo(1);
+    assertThat(features.get(0).getScenarios().size()).as("Check number of features").isEqualTo(1);
+  }
+  
+  @Test
+  public void testParseFeatureFilterTagsEmpty() {
+    String path = this.getClass().getClassLoader().getResource("features").getPath();
+    List<Feature> features = target.parseFeatures(path, "unknowntag");
+    assertThat(features.isEmpty()).as("Check number of features").isTrue();
   }
 
   @Test

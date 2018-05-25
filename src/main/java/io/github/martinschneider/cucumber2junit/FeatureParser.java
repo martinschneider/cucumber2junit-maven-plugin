@@ -26,16 +26,16 @@ public class FeatureParser {
    * tags will be included. Scenarios "inherit" the tags of the feature they are defined in.
    *
    * @param path directory containing the feature files
-   * @param requredTags {@link List} of tags to include
+   * @param tags {@link List} of tags to include
    * @return {@link List} of {@link Feature}s
    */
-  public List<Feature> parseFeatures(String path, String... requredTags) {
+  public List<Feature> parseFeatures(String path, String... tags) {
     List<Feature> features = new ArrayList<Feature>();
     LOG.info("Recursively parsing feature files from {}", path);
     try (Stream<Path> paths = Files.walk(Paths.get(path))) {
       paths
           .filter(Files::isRegularFile)
-          .forEach(x -> parseFeature(x, Paths.get(path), features, requredTags));
+          .forEach(x -> parseFeature(x, Paths.get(path), features, tags));
     } catch (IOException e) {
       LOG.error("Couldn't load feature files from directory {}", path);
     }
@@ -43,7 +43,7 @@ public class FeatureParser {
   }
 
   static List<Feature> parseFeature(
-      Path path, Path rootPath, List<Feature> features, String... requiredTags) {
+      Path path, Path rootPath, List<Feature> features, String... tags) {
     LOG.info("Processing feature file {}", path);
     try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
       List<Scenario> scenarios = new ArrayList<Scenario>();
@@ -59,10 +59,16 @@ public class FeatureParser {
         }
         if (line.trim().startsWith("Scenario")) {
           Scenario scenario = parseScenario(line, previousLine, lineNumber);
-          if (requiredTags.length == 0
-              || (scenario.getTags().stream().anyMatch(Arrays.asList(requiredTags)::contains)
-                  || featureTags.stream().anyMatch(Arrays.asList(requiredTags)::contains))) {
+          LOG.info("Scenario tags: {}, required tags: {}", scenario.getTags(), tags);
+          if (tags.length == 0
+              || (Arrays.asList(tags).stream().allMatch(scenario.getTags()::contains)
+                  || Arrays.asList(tags).stream().allMatch(featureTags::contains))) {
+            LOG.info("Adding scenario {}", scenario);
             scenarios.add(scenario);
+          }
+          else
+          {
+            LOG.info("Skipping scenario {}", scenario);
           }
         }
         previousLine = line;
