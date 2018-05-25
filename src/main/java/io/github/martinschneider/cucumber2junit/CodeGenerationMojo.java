@@ -5,11 +5,15 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Mojo for the Maven plugin. */
 @Mojo(name = "generate")
 public class CodeGenerationMojo extends AbstractMojo {
 
+  private static final Logger LOG = LoggerFactory.getLogger(CodeGenerationMojo.class); 
+  
   @Parameter(defaultValue = "${project.basedir}/src/test/resources/features")
   private String featuresSourceDirectory;
 
@@ -40,6 +44,14 @@ public class CodeGenerationMojo extends AbstractMojo {
   private JUnitTestGenerator codeGenerator = new JUnitTestGenerator();
 
   public void execute() throws MojoExecutionException {
+    LOG.info("Generating JUnit test classes...");
+    LOG.info("featuresSourceDirectory = {}", featuresSourceDirectory);
+    LOG.info("javaOutputDirectory = {}", javaOutputDirectory);
+    LOG.info("featuresClasspath = {}", featuresClasspath);
+    LOG.info("packageName = {}", packageName);
+    LOG.info("stepsPackageName = {}", stepsPackageName);
+    LOG.info("templatePath = {}", templatePath);
+    LOG.info("tags = {}", tags);
     codeGenerator.generateCucumberMain(javaOutputDirectory, packageName);
     codeGenerator.generateJUnitTests(
         featureParser.parseFeatures(featuresSourceDirectory, tags),

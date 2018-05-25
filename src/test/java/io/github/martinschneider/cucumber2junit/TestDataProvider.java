@@ -21,12 +21,12 @@ public final class TestDataProvider {
 
   public static Feature getFeature2() {
     Scenario scenario2a =
-        new Scenario(4, "Filter by tags", Stream.of("web").collect(Collectors.toList()));
+        new Scenario(4, "Filter by tags", Stream.of("web", "stable").collect(Collectors.toList()));
     Scenario scenario2b =
         new Scenario(
             17,
             "Use the search function",
-            Stream.of("web", "android", "ios").collect(Collectors.toList()));
+            Stream.of("web", "android", "ios", "stable").collect(Collectors.toList()));
     return new Feature(
         "Search and tags",
         "stackoverflow/Search.feature",
@@ -39,7 +39,7 @@ public final class TestDataProvider {
         new Scenario(
             17,
             "Use the search function",
-            Stream.of("web", "android", "ios").collect(Collectors.toList()));
+            Stream.of("web", "android", "ios", "stable").collect(Collectors.toList()));
     return new Feature(
         "Search and tags",
         "stackoverflow/Search.feature",
