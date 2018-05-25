@@ -23,7 +23,7 @@ Add the following  configuration in the `pom.xml` of your project:
             <plugin>
               <groupId>io.github.martinschneider</groupId>
               <artifactId>cucumber2junit-maven-plugin</artifactId>
-              <version>1.1</version>
+              <version>1.1.1</version>
               <executions>
                 <execution>
                   <id>aws</id>

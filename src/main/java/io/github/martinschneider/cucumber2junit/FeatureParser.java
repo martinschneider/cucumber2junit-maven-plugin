@@ -59,15 +59,14 @@ public class FeatureParser {
         }
         if (line.trim().startsWith("Scenario")) {
           Scenario scenario = parseScenario(line, previousLine, lineNumber);
-          LOG.info("Scenario tags: {}, required tags: {}", scenario.getTags(), tags);
+          List<String> allTags = new ArrayList<String>(featureTags);
+          allTags.addAll(scenario.getTags());
+          LOG.info("Scenario tags: {}, required tags: {}", allTags, tags);
           if (tags.length == 0
-              || (Arrays.asList(tags).stream().allMatch(scenario.getTags()::contains)
-                  || Arrays.asList(tags).stream().allMatch(featureTags::contains))) {
+              || (Arrays.asList(tags).stream().allMatch(allTags::contains))) {
             LOG.info("Adding scenario {}", scenario);
             scenarios.add(scenario);
-          }
-          else
-          {
+          } else {
             LOG.info("Skipping scenario {}", scenario);
           }
         }
