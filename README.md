@@ -6,10 +6,10 @@
 ## Background
 There are various cloud services which allow running automated tests on simulated or real mobile devices. One of them is [AWS Device Farm](https://aws.amazon.com/device-farm/). Their solution requires uploading the whole test code including all dependencies. This reduces the execution time but also limits the flexibility of how to execute tests.
 
-One major drawback is that **when using Appium and JUnit there is no support for custom test runners**. However, a custom runner (namely `cucumber.api.junit.Cucumber`or an extension of it) is the default way to run Cucumber features with JUnit. Until AWS officially supports Cucumber  there is no straightforward way to run them on their service.
+One major drawback is that **when using Appium and JUnit there is no support for custom test runners**. However, a custom runner (namely `cucumber.api.junit.Cucumber`or an extension of it) is the default way to run Cucumber features with JUnit. Until AWS officially supports Cucumber, there is no straightforward way to run them on their public device farm. They offer dedicated private devices as well which give you full access and therefore also allow running Cucumber tests against. This, however, comes at a different price tag.
 
 ## Solution
-This Maven plugin offers a workaround. It parses the feature files in a Java project and generates plain JUnit test classes which can be run within AWS Device Farm.
+This Maven plugin offers a workaround. It parses the feature files in a Java project and generates plain JUnit test classes which can be run on public devices within the AWS Device Farm.
 
 ## Configuration
 
