@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.util.Arrays;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,16 +42,19 @@ public class FeatureParser {
     return features;
   }
 
-  static List<Feature> parseFeature(
+  private List<Feature> parseFeature(
       Path path, Path rootPath, List<Feature> features, String... tags) {
     LOG.info("Processing feature file {}", path);
     try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
       List<Scenario> scenarios = new ArrayList<Scenario>();
       List<String> featureTags = new ArrayList<String>();
+      List<String> includedTags = parseRequiredTags(tags).getLeft();
+      List<String> excludedTags = parseRequiredTags(tags).getRight();
       String featureName = "";
       String line = "";
       String previousLine = "";
       int lineNumber = 1;
+      LOG.info("Required tags: {}, forbidden tags: {}", includedTags, excludedTags);
       while ((line = reader.readLine()) != null) {
         if (line.trim().startsWith("Feature")) {
           featureTags = parseTags(previousLine);
@@ -61,13 +64,12 @@ public class FeatureParser {
           Scenario scenario = parseScenario(line, previousLine, lineNumber);
           List<String> allTags = new ArrayList<String>(featureTags);
           allTags.addAll(scenario.getTags());
-          LOG.info("Scenario tags: {}, required tags: {}", allTags, tags);
-          if (tags.length == 0
-              || (Arrays.asList(tags).stream().allMatch(allTags::contains))) {
-            LOG.info("Adding scenario {}", scenario);
+          if (includedTags.stream().allMatch(allTags::contains)
+              && excludedTags.stream().noneMatch(allTags::contains)) {
+            LOG.info("Adding scenario {} with tags {}", scenario, allTags);
             scenarios.add(scenario);
           } else {
-            LOG.info("Skipping scenario {}", scenario);
+            LOG.debug("Skipping scenario {}", scenario);
           }
         }
         previousLine = line;
@@ -77,10 +79,30 @@ public class FeatureParser {
         features.add(
             new Feature(featureName, rootPath.relativize(path).toString(), scenarios, featureTags));
       }
+      if (scenarios.size() == 1) {
+        LOG.info("1 matching scenario added");
+      } else {
+        LOG.info("{} matching scenarios added", scenarios.size());
+      }
     } catch (IOException e) {
       LOG.warn("Error reading feature file {}. Skipping!");
     }
     return features;
+  }
+
+  // the left side of the Pair includes the required tags, the right side the forbidden ones
+  private Pair<List<String>, List<String>> parseRequiredTags(String[] input) {
+    List<String> requiredTags = new ArrayList<String>();
+    List<String> forbiddenTags = new ArrayList<String>();
+    Pair<List<String>, List<String>> tags = Pair.of(requiredTags, forbiddenTags);
+    for (String tag : input) {
+      if (tag.startsWith("~")) {
+        forbiddenTags.add(tag.substring(1));
+      } else {
+        requiredTags.add(tag);
+      }
+    }
+    return tags;
   }
 
   static String parseFeatureName(String line) {

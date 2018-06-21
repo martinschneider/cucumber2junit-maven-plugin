@@ -19,6 +19,7 @@ public class Feature {
    * Constructor.
    *
    * @param name feature name
+   * @param fileName the file name of the feature
    * @param scenarios {@link List} of scenarios
    * @param tags {@link List} of tags
    */

@@ -1,4 +1,4 @@
-[<img src="https://travis-ci.com/martinschneider/cucumber2junit.svg?branch=master" height="41" alt="Build status"/>](https://travis-ci.com/martinschneider/cucumber2junit)
+[<img src="https://travis-ci.com/martinschneider/cucumber2junit-maven-plugin.svg?branch=master" height="41" alt="Build status"/>](https://travis-ci.com/martinschneider/cucumber2junit-maven-plugin)
 [<img src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-1.svg" height="41" alt="Buy me a coffee"/>](https://www.buymeacoffee.com/mschneider)
 
 # cucumber2junit-maven-plugin
@@ -23,7 +23,7 @@ Add the following  configuration in the `pom.xml` of your project:
             <plugin>
               <groupId>io.github.martinschneider</groupId>
               <artifactId>cucumber2junit-maven-plugin</artifactId>
-              <version>1.1.1</version>
+              <version>1.2</version>
               <executions>
                 <execution>
                   <id>aws</id>

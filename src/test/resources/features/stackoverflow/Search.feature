@@ -1,6 +1,6 @@
 Feature: Search and tags 
 
-@web @stable
+@web @stable @sanity
 Scenario Outline: Filter by tags 
 	Given I am on the homepage 
 	When I go to the tags page 
@@ -13,7 +13,7 @@ Scenario Outline: Filter by tags
 		| selenium |
 		| appium | 
 	
-@web @android @ios @stable
+@web @android @ios @stable @sanity
 Scenario Outline: Use the search function 
 	Given I am on the homepage 
 	When I search for "<tag>"

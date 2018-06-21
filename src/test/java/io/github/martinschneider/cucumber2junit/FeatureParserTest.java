@@ -28,20 +28,32 @@ public class FeatureParserTest {
     List<Feature> features = target.parseFeatures(path, "ios");
     assertThat(features.size()).as("Check number of features").isEqualTo(2);
     assertThat(features)
-        .containsExactlyInAnyOrder(TestDataProvider.getFeature2IosOnly(), TestDataProvider.getFeature3());
+        .containsExactlyInAnyOrder(
+            TestDataProvider.getFeature2IosOnly(), TestDataProvider.getFeature3());
     features = target.parseFeatures(path, "stable");
     assertThat(features.size()).as("Check number of features").isEqualTo(1);
-    assertThat(features.get(0).getScenarios().size()).as("Check number of features").isEqualTo(2);
+    assertThat(features.get(0).getScenarios().size()).as("Check number of scenarios").isEqualTo(2);
     features = target.parseFeatures(path, "stable", "ios");
     assertThat(features.size()).as("Check number of features").isEqualTo(1);
-    assertThat(features.get(0).getScenarios().size()).as("Check number of features").isEqualTo(1);
+    assertThat(features.get(0).getScenarios().size()).as("Check number of scenarios").isEqualTo(1);
   }
-  
+
   @Test
   public void testParseFeatureFilterTagsEmpty() {
     String path = this.getClass().getClassLoader().getResource("features").getPath();
     List<Feature> features = target.parseFeatures(path, "unknowntag");
     assertThat(features.isEmpty()).as("Check number of features").isTrue();
+  }
+
+  @Test
+  public void testParseFeatureFilterTagsExclude() {
+    String path = this.getClass().getClassLoader().getResource("features").getPath();
+    List<Feature> features = target.parseFeatures(path, "~sanity");
+    assertThat(features.size()).as("Check number of features").isEqualTo(1);
+    assertThat(features.get(0).getScenarios().size()).as("Check number of scenarios").isEqualTo(1);
+    assertThat(features.get(0).getScenarios().get(0).getName())
+        .as("Check scenario name")
+        .isEqualTo("Ask a question using quick link");
   }
 
   @Test

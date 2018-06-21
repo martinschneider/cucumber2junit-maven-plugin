@@ -3,7 +3,6 @@ package io.github.martinschneider.cucumber2junit;
 import io.github.martinschneider.cucumber2junit.model.Feature;
 import io.github.martinschneider.cucumber2junit.model.Scenario;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,12 +20,12 @@ public final class TestDataProvider {
 
   public static Feature getFeature2() {
     Scenario scenario2a =
-        new Scenario(4, "Filter by tags", Stream.of("web", "stable").collect(Collectors.toList()));
+        new Scenario(4, "Filter by tags", Stream.of("web", "stable", "sanity").collect(Collectors.toList()));
     Scenario scenario2b =
         new Scenario(
             17,
             "Use the search function",
-            Stream.of("web", "android", "ios", "stable").collect(Collectors.toList()));
+            Stream.of("web", "android", "ios", "stable", "sanity").collect(Collectors.toList()));
     return new Feature(
         "Search and tags",
         "stackoverflow/Search.feature",
@@ -39,7 +38,7 @@ public final class TestDataProvider {
         new Scenario(
             17,
             "Use the search function",
-            Stream.of("web", "android", "ios", "stable").collect(Collectors.toList()));
+            Stream.of("web", "android", "ios", "stable", "sanity").collect(Collectors.toList()));
     return new Feature(
         "Search and tags",
         "stackoverflow/Search.feature",
@@ -53,6 +52,6 @@ public final class TestDataProvider {
         "Login",
         "carousell/Login.feature",
         Stream.of(scenario3).collect(Collectors.toList()),
-        Stream.of("web", "android", "ios").collect(Collectors.toList()));
+        Stream.of("web", "android", "ios", "sanity").collect(Collectors.toList()));
   }
 }

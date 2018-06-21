@@ -1,4 +1,4 @@
-@web @android @ios
+@web @android @ios @sanity
 Feature: Login 
 
 Scenario: Successful login 
