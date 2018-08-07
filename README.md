@@ -1,5 +1,4 @@
 [<img src="https://travis-ci.com/martinschneider/cucumber2junit-maven-plugin.svg?branch=master" height="41" alt="Build status"/>](https://travis-ci.com/martinschneider/cucumber2junit-maven-plugin)
-[<img src="https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-1.svg" height="41" alt="Buy me a coffee"/>](https://www.buymeacoffee.com/mschneider)
 
 # cucumber2junit-maven-plugin
 
